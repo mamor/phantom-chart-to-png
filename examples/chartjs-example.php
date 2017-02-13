@@ -26,7 +26,7 @@ $data = [
 ];
 $opts = ['scaleLineWidth' => '5'];
 
-$format = "phantomjs ../chartjs.coffee %s %s %s %s '%s' '%s'";
+$format = "phantomjs ../chartjs.js %s %s %s %s '%s' '%s'";
 $command = sprintf($format, $dest, $width, $height, $type, json_encode($data), json_encode($opts));
 
 exec($command);
