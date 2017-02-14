@@ -26,39 +26,28 @@ page.onCallback = function(data) {
   return phantom.exit();
 };
 
-page.injectJs('./vendor/jquery/jquery-2.1.0.min.js');
+page.injectJs('./node_modules/jquery/dist/jquery.min.js');
+page.injectJs('./node_modules/chart.js/dist/Chart.js');
 
-page.injectJs('./vendor/Chart.js/Chart.min.js');
-
-page.evaluate(function(dest, width, height, type, data, opts) {
-  var canvas, chart, dataObj, optsObj;
-  canvas = $('<canvas />').attr({
+page.evaluate(function(dest, width, height, data) {
+  var canvas = $('<canvas />').attr({
+    id: 'chart',
     width: width,
     height: height
   }).appendTo($('body'));
-  dataObj = $.parseJSON(data);
-  optsObj = opts ? $.parseJSON(opts) : {};
-  optsObj.onAnimationComplete = function() {
-    return window.callPhantom({
-      clipRect: canvas[0].getBoundingClientRect(),
-      dest: dest
-    });
+
+  var chart = document.getElementById('chart');
+
+  var dataObj = JSON.parse(data);
+  dataObj.options = dataObj.options || {};
+  dataObj.options.animation = {
+    onComplete: function() {
+      return window.callPhantom({
+        clipRect: chart.getBoundingClientRect(),
+        dest: dest
+      });
+    }
   };
-  chart = new Chart(canvas[0].getContext('2d'));
-  switch (type) {
-    case 'line':
-      return chart.Line(dataObj, optsObj);
-    case 'bar':
-      return chart.Bar(dataObj, optsObj);
-    case 'radar':
-      return chart.Radar(dataObj, optsObj);
-    case 'polar':
-      return chart.PolarArea(dataObj, optsObj);
-    case 'pie':
-      return chart.Pie(dataObj, optsObj);
-    case 'doughnut':
-      return chart.Doughnut(dataObj, optsObj);
-    default:
-      throw new Error('Invalid chart type.');
-  }
-}, system.args[1], system.args[2], system.args[3], system.args[4], system.args[5], system.args[6]);
+
+  new Chart(chart.getContext('2d'), dataObj);
+}, system.args[1], system.args[2], system.args[3], system.args[4]);

@@ -9,9 +9,10 @@ Chart via
     $ sudo npm install -g phantomjs
     $ git clone https://github.com/mamor/phantom-chart-to-png.git
     $ cd phantom-chart-to-png
+    $ npm install
 
     # Chart.js
-    $ phantomjs chartjs.js {dest} {width} {height} {type} {data} {opts}
+    $ phantomjs chartjs.js {dest} {width} {height} {data}
 
     # Google Charts
     $ phantomjs googlecharts.js {dest} {width} {height} {type} {data} {opts}
@@ -29,13 +30,6 @@ Output png file height
 
 ### type
 Chart type
-#### Chart.js
-* line
-* bar
-* radar
-* polar
-* pie
-* doughnut
 
 #### Google Charts
 * AreaChart
@@ -55,7 +49,7 @@ Chart data and options
 
 #### Chart.js
 
-    $ phantomjs chartjs.js chartjs.png 600 400 line '{"labels":["January","February","March","April","May","June","July"],"datasets":[{"fillColor":"rgba(220, 220, 220, 0.5)","strokeColor":"rgba(220, 220, 220, 1)","pointColor":"rgba(220, 220, 220, 1)","pointStrokeColor":"#fff","data":[65,59,90,81,56,55,40]},{"fillColor":"rgba(151, 187, 205, 0.5)","strokeColor":"rgba(151, 187, 205, 1)","pointColor":"rgba(151, 187, 205, 1)","pointStrokeColor":"#fff","data":[28,48,40,19,96,27,100]}]}' '{"scaleLineWidth":"5"}'
+    $ phantomjs chartjs.js chartjs.png 600 400 '{Chart.js options}'
 
 #### Google Charts
 

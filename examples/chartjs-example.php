@@ -4,29 +4,37 @@
 $dest = 'chartjs-example.php.png';
 $width = 600;
 $height = 400;
-$type = 'line';
-$data = [
-    'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    'datasets' => [
-        [
-            'fillColor' => 'rgba(220, 220, 220, 0.5)',
-            'strokeColor' => 'rgba(220, 220, 220, 1)',
-            'pointColor' => 'rgba(220, 220, 220, 1)',
-            'pointStrokeColor' => '#fff',
-            'data' => [65, 59, 90, 81, 56, 55, 40],
-        ],
-        [
-            'fillColor' => 'rgba(151, 187, 205, 0.5)',
-            'strokeColor' => 'rgba(151, 187, 205, 1)',
-            'pointColor' => 'rgba(151, 187, 205, 1)',
-            'pointStrokeColor' => '#fff',
-            'data' => [28, 48, 40, 19, 96, 27, 100],
-        ],
-    ],
-];
-$opts = ['scaleLineWidth' => '5'];
 
-$format = "phantomjs ../chartjs.js %s %s %s %s '%s' '%s'";
-$command = sprintf($format, $dest, $width, $height, $type, json_encode($data), json_encode($opts));
+// @see http://www.chartjs.org/docs/#line-chart-scatter-line-charts
+$data = <<<JSON
+{
+    "type": "line",
+    "data": {
+        "datasets": [{
+            "label": "Scatter Dataset",
+            "data": [{
+                "x": -10,
+                "y": 0
+            }, {
+                "x": 0,
+                "y": 10
+            }, {
+                "x": 10,
+                "y": 5
+            }]
+        }]
+    },
+    "options": {
+        "scales": {
+            "xAxes": [{
+                "type": "linear",
+                "position": "bottom"
+            }]
+        }
+    }
+}
+JSON;
 
-exec($command);
+$format = "phantomjs ../chartjs.js %s %s %s '%s'";
+$command = sprintf($format, $dest, $width, $height, $data);
+system($command);

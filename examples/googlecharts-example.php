@@ -24,4 +24,4 @@ $opts = [
 $format = "phantomjs ../googlecharts.js %s %s %s %s '%s' '%s'";
 $command = sprintf($format, $dest, $width, $height, $type, json_encode($data), json_encode($opts));
 
-exec($command);
+system($command);
