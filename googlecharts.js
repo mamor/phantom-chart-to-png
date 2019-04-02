@@ -26,7 +26,7 @@ page.onCallback = function(data) {
   return phantom.exit();
 };
 
-page.injectJs('./vendor/jquery/jquery-2.1.0.min.js');
+page.injectJs('./node_modules/jquery/dist/jquery.min.js');
 
 page.includeJs('https://www.google.com/jsapi', function() {
   return page.evaluate(function(dest, width, height, type, data, opts) {
